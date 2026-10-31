@@ -2,7 +2,11 @@
 
 Aplicación académica para gestionar productos de una tienda de útiles escolares con **Python, Streamlit y MongoDB Atlas**. Implementa registro, consulta, actualización y eliminación (CRUD).
 
-**Estado:** repositorio público creado; aplicación preparada para despliegue. La URL pública de Streamlit y las evidencias reales de Atlas están pendientes. No se presenta el modo de demostración como integración real.
+**Estado:** código publicado y aplicación desplegada en Streamlit. La aplicación pública funciona en **modo demostración** mientras se completan las credenciales privadas de MongoDB. En Atlas ya existe `inventario_escolar.productos` con 30 documentos. La integración entre la aplicación y Atlas sigue pendiente de verificación.
+
+**Aplicación:** https://inventario-escolar-jeferson.streamlit.app/
+
+**Repositorio:** https://github.com/jeferson1802a/inventario-escolar
 
 ## Problema
 
@@ -76,7 +80,7 @@ Este comando crea una colección temporal `prueba_crud_<identificador>`, ejecuta
 - Informe editable: `docs/INFORME.md` y, si está disponible, su versión Word.
 - Pruebas manuales: `docs/PLAN_DE_PRUEBAS.md`.
 - Capturas reales: instrucciones en `docs/capturas/README.md`.
-- URL Streamlit: **PENDIENTE DEL DESPLIEGUE**.
+- URL Streamlit: https://inventario-escolar-jeferson.streamlit.app/ (modo demostración hasta configurar secretos).
 - URL GitHub: https://github.com/jeferson1802a/inventario-escolar
 
 La clave compartida de administrador es una protección básica apropiada para esta demostración académica; una implementación comercial necesita usuarios individuales, controles de acceso y auditoría.
