@@ -2,91 +2,93 @@
 
 Informe de diseño desarrollo y verificación
 
-Estudiante: [Completar nombre y apellidos]
-Curso y sección: [Completar]
-Docente: [Completar]
+Estudiante o integrantes: [Completar nombres y códigos]
+Curso y sección: [Completar]    Docente: [Completar]
 Fecha: 31 de octubre de 2026
 
-El proyecto propone centralizar el inventario de una tienda de útiles escolares mediante una aplicación web con operaciones CRUD. El código y los datos de demostración están preparados y se han validado localmente. La conexión real a MongoDB Atlas, la publicación y sus evidencias se completarán con las cuentas del estudiante antes de presentar este informe como entrega final.
+Se desarrolló y publicó una aplicación para gestionar el inventario de una tienda de útiles escolares. Las operaciones de registro, consulta, actualización y eliminación se probaron desde Streamlit y se comprobaron en MongoDB Atlas. El sistema terminó la verificación con los 30 productos originales.
 
 ## 1 Problemática y objetivo
 
-Una pequeña tienda registra sus productos en cuadernos y archivos separados. Esta práctica dificulta conocer las existencias, mantener precios actualizados e identificar productos que requieren reposición. También favorece registros duplicados y consultas lentas.
+Una pequeña tienda registra sus productos en cuadernos y archivos separados, lo que dificulta conocer existencias, actualizar precios y detectar productos por reponer. El objetivo es centralizar esta información en una aplicación web accesible desde el navegador. El alcance comprende el inventario de una tienda; no incluye facturación, ventas ni múltiples almacenes.
 
-El objetivo es desarrollar una aplicación accesible desde un navegador que permita registrar, consultar, actualizar y eliminar productos, centralizando la información en MongoDB Atlas. El alcance comprende un inventario de una sola tienda; no incluye ventas, facturación ni gestión de múltiples almacenes.
+## 2 Diseño y datos
 
-## 2 Diseño de la solución
+La arquitectura sigue el flujo navegador → Streamlit → reglas de negocio en Python → PyMongo → MongoDB Atlas. Se utiliza el clúster gratuito existente AgentesIA, con la base independiente inventario_escolar y la colección productos. GitHub aloja el código y Streamlit Community Cloud publica la interfaz con Python 3.12.
 
-La interfaz se implementa con Streamlit y las reglas de negocio con Python. PyMongo comunica la aplicación con una base alojada en MongoDB Atlas mediante una conexión cifrada. GitHub almacena el código y Streamlit Community Cloud se utilizará para publicar la interfaz.
+Cada documento contiene codigo, nombre, categoria, precio_centimos, stock, stock_minimo, creado_en, actualizado_en y version, además del identificador _id generado por MongoDB. Un índice único sobre codigo evita duplicados. El precio se almacena en céntimos enteros: 850 representa S/ 8.50. Las fechas se guardan en UTC y la versión permite detectar actualizaciones simultáneas.
 
-Arquitectura: navegador → Streamlit → reglas y repositorio PyMongo → MongoDB Atlas.
+El archivo data/productos.csv contiene 30 productos sintéticos de seis categorías. Los precios y existencias se crearon con fines académicos y no pertenecen a una tienda real. La muestra incluye productos disponibles, con stock bajo y agotados. No contiene datos personales.
 
-La base propuesta es `inventario_escolar` y la colección es `productos`. Cada documento contiene código, nombre, categoría, precio en céntimos, stock, stock mínimo, fechas de creación y actualización, y versión. MongoDB genera el identificador `_id`. Un índice único sobre `codigo` impide duplicados. El precio se almacena como entero: 850 representa S/ 8.50.
+## 3 Desarrollo y funcionamiento
 
-## 3 Datos utilizados
+La interfaz ofrece cuatro pestañas para consultar, registrar, actualizar y eliminar productos. La consulta permite buscar por código o nombre, filtrar por categoría y estado, y descargar resultados en CSV. El registro valida los campos; la edición conserva el código; la eliminación exige escribir el código exacto como confirmación.
 
-Se creó el archivo `data/productos.csv` con 30 productos sintéticos de seis categorías: Cuadernos, Escritura, Arte, Papelería, Accesorios y Organización. Incluye existencias normales, bajas y agotadas para comprobar las alertas. Los datos no representan una tienda real ni contienen información personal; su finalidad es académica.
+El resumen muestra productos, unidades, artículos por reponer y valor a precio de venta. Un stock de cero indica Agotado; un stock positivo menor o igual al mínimo indica Stock bajo. El valor mostrado no representa costo ni utilidad.
 
-La carga inicial valida cada fila y agrega únicamente los códigos que aún no existen. Al repetirla se conservan los cambios realizados sobre los productos existentes.
-
-<!-- pagebreak -->
-
-## 4 Desarrollo y funcionamiento
-
-La aplicación organiza las operaciones en cuatro pestañas. En Consultar inventario se muestra la tabla y se aplican búsquedas por código o nombre, filtros por categoría y filtros por disponibilidad. También se permite descargar los resultados en CSV.
-
-En Registrar producto se solicitan los datos y se rechazan códigos inválidos, nombres vacíos, precios negativos y cantidades no enteras. En Actualizar producto se modifican nombre, categoría, precio y existencias; el código permanece fijo. La eliminación requiere escribir el código exacto como confirmación.
-
-El resumen muestra productos registrados, unidades disponibles, productos por reponer y valor del inventario a precio de venta. Un producto se considera agotado cuando su stock es cero y con stock bajo cuando sus existencias son positivas y menores o iguales al mínimo. El valor mostrado no representa costo ni utilidad.
-
-## 5 Seguridad y persistencia
-
-Las credenciales se leen de secretos privados o variables de entorno y se excluyen del repositorio. Se utiliza un usuario de MongoDB limitado a la base del proyecto. La consulta es pública y las operaciones de escritura en Atlas requieren una clave de administrador.
-
-Las actualizaciones y eliminaciones comprueban la versión del documento para detectar cambios simultáneos. Los errores de conexión muestran mensajes sin revelar la cadena de conexión. Esta clave compartida es una protección básica para la actividad; un sistema comercial necesitaría usuarios individuales y auditoría.
-
-Sin credenciales, el programa ofrece un modo de demostración con datos temporales por sesión. Este modo está identificado en pantalla y no acredita integración con Atlas. Si existe una URI pero falla la conexión, el programa muestra el error sin sustituir Atlas por almacenamiento temporal.
-
-## 6 Verificación realizada
-
-Se ejecutaron 13 pruebas automatizadas locales con resultado satisfactorio. Se verificaron la muestra de 30 productos, validación y normalización, dinero en céntimos, filtros, estados de stock, exportación CSV, duplicados, CRUD, código inmutable y conflictos de versión. También se comprobó la interacción con Streamlit y el acceso de administrador usando MongoDB simulado.
-
-Las pruebas de repositorio utilizaron memoria y `mongomock`; las de interfaz utilizaron AppTest. Estos resultados demuestran el comportamiento local, pero no verifican todavía conectividad, autenticación ni persistencia real en Atlas.
-
-La prueba real se ejecutará con `python -m scripts.test_atlas`. El script crea una colección temporal, verifica CRUD y carga sin duplicados, y elimina únicamente esa colección. El plan manual complementario está en `docs/PLAN_DE_PRUEBAS.md`.
-
-Resultado de integración real con Atlas: PENDIENTE DE EJECUCIÓN.
+La consulta es pública y las modificaciones requieren la clave de administrador. Los secretos se guardan fuera de GitHub y el usuario inventario_app tiene permiso readWrite únicamente sobre inventario_escolar. La clave compartida es una protección básica para la actividad; una solución comercial requeriría usuarios individuales y auditoría.
 
 <!-- pagebreak -->
 
-## 7 Publicación y enlaces de entrega
+## 4 Pruebas y resultados
 
-Repositorio público de GitHub: [PENDIENTE insertar URL real].
+Se ejecutaron 13 pruebas automatizadas locales sobre validación, datos, dinero, filtros, CSV, duplicados, CRUD, concurrencia e interfaz. La primera ejecución de GitHub Actions también terminó correctamente. Las pruebas automatizadas con memoria y mongomock se distinguen de las siguientes verificaciones reales sobre Atlas.
 
-Aplicación pública de Streamlit: [PENDIENTE insertar URL real].
+- Conexión y consulta: la URL pública mostró Conectado a MongoDB Atlas y recuperó 30 productos, 630 unidades y valor a precio de venta de S/ 2,176.50.
+- Registro: se comprobó que PRU-001 no existía y se creó Producto temporal de prueba CRUD, categoría Cuadernos, precio S/ 2.50, stock 10 y mínimo 3. La aplicación confirmó el registro y mostró 31 productos.
+- Actualización: se cambió el stock de PRU-001 de 10 a 2. La consulta mostró Stock bajo. En Data Explorer de Atlas se verificaron precio_centimos 250, stock 2 y version 2.
+- Eliminación: con autorización del responsable se eliminó únicamente PRU-001 desde Streamlit. La aplicación confirmó la operación y Atlas devolvió cero resultados para ese código.
+- Estado final: permanecieron 30 productos y 630 unidades. Se observó el acceso de visitante antes del ingreso y de administrador después.
 
-La publicación requiere crear el repositorio, subir los archivos de la aplicación, configurar los secretos en Streamlit Community Cloud y autorizar el acceso de red del servidor en Atlas. Antes de entregar, ambos enlaces deben abrirse desde una ventana privada y la aplicación debe indicar conexión a MongoDB Atlas.
+La comprobación del documento actualizado y de su posterior ausencia en Data Explorer confirma que los cambios llegaron a la base remota. No se afirma que el script local de integración se ejecutó con credenciales reales: estas permanecieron en Streamlit. El detalle está en docs/PLAN_DE_PRUEBAS.md.
 
-## 8 Evidencias de funcionamiento
+## 5 Enlaces públicos
 
-Las siguientes evidencias se incorporarán después de la conexión y publicación. Deben ser capturas reales y ocultar credenciales, cadenas de conexión y datos personales de la cuenta.
+Aplicación: https://inventario-escolar-jeferson.streamlit.app/
 
-- Figura 1 Clúster de MongoDB Atlas disponible. [PENDIENTE insertar captura].
-- Figura 2 Base inventario_escolar y colección productos con documentos. [PENDIENTE insertar captura].
-- Figura 3 Aplicación pública conectada a Atlas con tabla y URL visibles. [PENDIENTE insertar captura].
-- Figura 4 Registro y consulta del producto PRU-001. [PENDIENTE insertar captura].
-- Figura 5 Actualización del stock y comprobación del documento en Atlas. [PENDIENTE insertar captura].
-- Figura 6 Eliminación confirmada y verificación de ausencia. [PENDIENTE insertar captura].
+Repositorio: https://github.com/jeferson1802a/inventario-escolar
 
-## 9 Conclusiones y estado de entrega
+Pruebas en GitHub: https://github.com/jeferson1802a/inventario-escolar/actions/runs/41175208075
 
-La solución implementada permite gestionar el inventario mediante CRUD y añade filtros, alertas y exportación. La separación entre interfaz, reglas de negocio y repositorio facilita la verificación y el mantenimiento. Los datos sintéticos permiten reproducir los casos de prueba sin depender de una fuente externa.
+## 6 Conclusiones
 
-El código pasó las pruebas locales. Para completar la actividad faltan la integración real con Atlas, las pruebas de persistencia, las URLs públicas y las capturas. Este documento es una base editable y deberá actualizarse con esos resultados antes de su entrega.
+La solución centraliza el inventario, facilita las consultas y señala productos por reponer. La verificación real demostró las cuatro operaciones CRUD entre la aplicación publicada y MongoDB Atlas. Se entregan código, datos reproducibles, documentación y capturas reales del clúster, la colección y las operaciones.
 
-## 10 Referencias
+## 7 Referencias
 
 - MongoDB. Connect to an Atlas Cluster. https://www.mongodb.com/docs/atlas/connect-to-database-deployment/
 - MongoDB. Configure Database Users. https://www.mongodb.com/docs/atlas/security-add-mongodb-users/
 - Streamlit. File organization for your Community Cloud app. https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/file-organization
 - Streamlit. Managing secrets when deploying your app. https://docs.streamlit.io/deploy/concepts/secrets
+
+<!-- pagebreak -->
+
+## 8 Evidencias del clúster y la colección
+
+Las capturas corresponden al entorno real de Atlas y Streamlit y no muestran credenciales.
+
+Figura 1 Clúster AgentesIA activo en el nivel gratuito.
+![Clúster de MongoDB Atlas](capturas/01_cluster.jpg)
+
+Figura 2 Base inventario_escolar y colección productos con la muestra inicial.
+![Colección de productos en MongoDB Atlas](capturas/02_coleccion.jpg)
+
+<!-- pagebreak -->
+
+## 9 Evidencias de consulta y registro
+
+Figura 3 Aplicación pública conectada a Atlas con los 30 productos de la muestra.
+![Consulta real desde Streamlit](capturas/03_consulta_atlas.jpg)
+
+Figura 4 Registro de PRU-001 confirmado y consulta del nuevo producto.
+![Registro del producto temporal](capturas/04_registro.jpg)
+
+<!-- pagebreak -->
+
+## 10 Evidencias de actualización y eliminación
+
+Figura 5 Documento PRU-001 en Atlas con stock 2 y version 2 después de actualizarlo.
+![Documento actualizado en Atlas](capturas/05_documento_atlas.jpg)
+
+Figura 6 Eliminación de PRU-001 confirmada y regreso a 30 productos.
+![Eliminación del producto temporal](capturas/06_eliminacion.jpg)

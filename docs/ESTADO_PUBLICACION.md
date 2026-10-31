@@ -2,23 +2,17 @@
 
 Fecha: 31 de octubre de 2026.
 
-## Completado
-
 - Repositorio público: https://github.com/jeferson1802a/inventario-escolar
-- Aplicación pública: https://inventario-escolar-jeferson.streamlit.app/
-- Python 3.12 seleccionado para el despliegue.
-- Primera ejecución de GitHub Actions completada correctamente: https://github.com/jeferson1802a/inventario-escolar/actions/runs/41175208075
-- Base `inventario_escolar` y colección `productos` creadas en el clúster gratuito existente `AgentesIA`.
-- Treinta documentos sintéticos cargados y comprobados desde Data Explorer de Atlas.
-- Formulario del nuevo usuario `inventario_app` preparado con permiso `readWrite` sobre `inventario_escolar`.
+- Aplicación conectada a Atlas: https://inventario-escolar-jeferson.streamlit.app/
+- Python 3.12 en Streamlit Community Cloud.
+- Primera ejecución de GitHub Actions completada correctamente.
+- Clúster gratuito AgentesIA; base inventario_escolar; colección productos.
+- Usuario inventario_app con readWrite limitado a inventario_escolar.
+- Secretos configurados por el responsable directamente en Streamlit.
+- CRUD real probado con PRU-001: registro, consulta, stock de 10 a 2 y eliminación autorizada.
+- En Atlas se verificó stock 2 y version 2; después de eliminar, cero resultados para ese código.
+- Estado final: 30 productos, 630 unidades y valor a precio de venta S/ 2,176.50.
 
-## Pendiente de acción privada del estudiante
+El informe incorpora enlaces y capturas reales. El estudiante debe completar sus datos académicos antes de entregar. La clave de administrador se comunica al docente por un medio privado si necesita evaluar las operaciones de escritura.
 
-1. Introducir una contraseña para `inventario_app` y confirmar Add User en Atlas.
-2. Guardar la URI real y la clave privada de administrador en los secretos de Streamlit, nunca en GitHub.
-3. Comprobar la conexión real desde Streamlit y ejecutar las pruebas CRUD y de persistencia.
-4. Completar el informe Word con resultados y capturas de esa integración.
-
-**La aplicación pública está actualmente en modo demostración. La existencia de datos en Atlas no significa que la aplicación ya esté conectada.**
-
-Los archivos `INFORME.md` y Word son borradores preparados antes de esta publicación; sus apartados pendientes se actualizarán al finalizar la integración real.
+No se almacenan claves en el repositorio. El script local test_atlas.py no se ejecutó con credenciales reales; la integración se verificó desde la aplicación publicada y Data Explorer.

@@ -26,6 +26,8 @@ Entorno probado: Python 3.12, Streamlit 1.66.1, PyMongo 4.19.0, dnspython 2.9.1 
 
 Streamlit emite avisos de contexto al ejecutarse mediante AppTest y de una futura deprecación interna de pandas en el gráfico; no causaron fallos. El entorno restringido de Windows también emite un aviso de permisos al limpiar una carpeta temporal después de terminar las pruebas; la suite devolvió código 0.
 
-## Verificaciones pendientes
+## Estado al finalizar la primera etapa local
 
-La ejecución de `python -m scripts.test_atlas` se detuvo con el mensaje esperado de configuración pendiente, porque no se han proporcionado credenciales. **No se ha validado una conexión real a MongoDB Atlas.** Tampoco se han publicado todavía repositorio remoto ni aplicación pública.
+En la primera etapa, `python -m scripts.test_atlas` se detuvo con el mensaje de configuración pendiente, porque no se proporcionaron credenciales locales. Ese script no se ejecutó después con credenciales reales.
+
+Posteriormente se publicaron GitHub y Streamlit, y se verificó el CRUD real desde la aplicación y Data Explorer de Atlas. Los resultados de esa etapa están en PLAN_DE_PRUEBAS.md e INFORME.md. Esta sección conserva la distinción entre pruebas locales simuladas y pruebas reales en la nube.

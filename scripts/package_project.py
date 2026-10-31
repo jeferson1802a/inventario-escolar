@@ -11,6 +11,10 @@ FILES = [
     "docs/PLAN_DE_PRUEBAS.md", "docs/RESULTADOS_LOCALES.md", "docs/capturas/README.md",
     "tests/test_app.py", "tests/test_inventory.py", "scripts/test_atlas.py",
     "scripts/build_report.py", "scripts/package_project.py",
+    "docs/ESTADO_PUBLICACION.md",
+    "docs/capturas/01_cluster.jpg", "docs/capturas/02_coleccion.jpg",
+    "docs/capturas/03_consulta_atlas.jpg", "docs/capturas/04_registro.jpg",
+    "docs/capturas/05_documento_atlas.jpg", "docs/capturas/06_eliminacion.jpg",
 ]
 
 
