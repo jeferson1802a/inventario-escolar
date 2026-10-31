@@ -1,0 +1,31 @@
+codigo,nombre,categoria,precio,stock,stock_minimo
+UTI-001,Cuaderno cuadriculado A4,Cuadernos,8.50,25,5
+UTI-002,Cuaderno rayado A4,Cuadernos,8.50,18,5
+UTI-003,Cuaderno de dibujo A4,Cuadernos,6.00,4,5
+UTI-004,Cuaderno cuadriculado A5,Cuadernos,5.00,30,8
+UTI-005,Libreta de notas,Cuadernos,4.50,0,5
+UTI-006,Lapicero azul,Escritura,1.50,60,15
+UTI-007,Lapicero negro,Escritura,1.50,48,15
+UTI-008,Lapicero rojo,Escritura,1.50,12,15
+UTI-009,Lápiz de grafito HB,Escritura,1.00,80,20
+UTI-010,Portaminas de 0.5 mm,Escritura,4.00,14,5
+UTI-011,Resaltador amarillo,Escritura,3.00,5,5
+UTI-012,Marcador de pizarra azul,Escritura,4.50,16,5
+UTI-013,Colores de 12 unidades,Arte,12.00,4,5
+UTI-014,Plumones de 12 unidades,Arte,10.00,20,5
+UTI-015,Crayones de 12 unidades,Arte,6.50,15,5
+UTI-016,Témperas de 6 colores,Arte,9.00,0,4
+UTI-017,Pincel escolar número 8,Arte,2.50,22,6
+UTI-018,Papel bond A4 paquete de 500 hojas,Papelería,18.00,10,3
+UTI-019,Cartulina blanca,Papelería,1.50,35,10
+UTI-020,Cartulina de colores,Papelería,2.00,8,10
+UTI-021,Papel lustre paquete de 10 hojas,Papelería,3.50,24,5
+UTI-022,Notas adhesivas paquete,Papelería,4.00,18,5
+UTI-023,Regla de 30 cm,Accesorios,2.50,0,5
+UTI-024,Borrador blanco,Accesorios,1.00,50,10
+UTI-025,Tajador con depósito,Accesorios,2.00,7,8
+UTI-026,Tijera escolar de punta roma,Accesorios,4.50,20,5
+UTI-027,Pegamento en barra de 21 g,Accesorios,3.50,28,8
+UTI-028,Folder manila A4,Organización,1.00,45,10
+UTI-029,Archivador de palanca,Organización,12.00,9,3
+UTI-030,Estuche escolar,Organización,8.00,3,5

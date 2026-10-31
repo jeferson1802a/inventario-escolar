@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.streamlit/secrets.toml
+.env
+.env.*
+!.env.example
+artifacts/
+*.log
+Inventario_Escolar_Entrega.zip
+# Los cuadernos originales pueden contener credenciales y no se publican.
+*.ipynb
+docs/capturas/*
+!docs/capturas/README.md
