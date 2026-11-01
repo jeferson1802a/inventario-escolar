@@ -11,5 +11,12 @@ artifacts/
 Inventario_Escolar_Entrega.zip
 # Los cuadernos originales pueden contener credenciales y no se publican.
 *.ipynb
-docs/capturas/*
-!docs/capturas/README.md
+# Material de entrega conservado localmente, fuera de la documentación pública.
+/docs/*.docx
+/docs/INFORME.md
+/docs/ESTADO_PUBLICACION.md
+/docs/PLAN_DE_PRUEBAS.md
+/docs/RESULTADOS_LOCALES.md
+/docs/capturas/
+/scripts/build_report.py
+/scripts/package_project.py
